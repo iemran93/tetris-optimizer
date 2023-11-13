@@ -1,0 +1,29 @@
+Straight: vertical and horizontal reflection symmetry, and two points of rotational symmetry
+Square: vertical and horizontal reflection symmetry, and four points of rotational symmetry
+T: vertical reflection symmetry only
+L: no symmetry
+S: two points of rotational symmetry only
+
+Fixed tetrominoes (translated but not rotated or reflected)
+
+There are:
+two I
+four J
+four L
+one O
+two S 
+four T
+two Z
+= for a total of 19 fixed tetrominoes
+
+a. input validation size and newline
+b. tetrominoes validation (19)
+
+hint: recursive backtracking 
+1. place
+2. remove
+3. increase solution size
+
+hint: 
+tetrimino as a structure that contained a height, width and character array
+
