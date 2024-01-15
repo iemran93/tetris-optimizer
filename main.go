@@ -45,10 +45,15 @@ func main() {
 	}
 
 	fmt.Println(tetros)
+
 	// check validation
 	if Valid(tetros) {
-		fmt.Println("valid tetro. lets play")
+		fmt.Println("Valid tetro, lets play")
+		// create a structure for the input tetros width, height, character
+		tetrosMap := *StructTetros(tetros)
+		fmt.Println(tetrosMap)
+
 	} else {
-		fmt.Println("not valid tetro")
+		log.Fatal("Tetro not valid")
 	}
 }

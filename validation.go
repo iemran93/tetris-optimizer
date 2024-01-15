@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"strings"
 )
 
@@ -55,12 +54,10 @@ func tetroValid(tetros [][]string) bool {
 					if sideTouching == 0 || sideTouching > 2 {
 						return false
 					}
-					fmt.Println(rx, cx, sideTouching)
 					totalSideTouching += sideTouching
 				}
 			}
 		}
-		fmt.Println(tetro, totalSideTouching)
 		if totalSideTouching != 6 && totalSideTouching != 8 {
 			return false
 		}
