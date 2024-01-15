@@ -2,7 +2,7 @@ Straight: vertical and horizontal reflection symmetry, and two points of rotatio
 Square: vertical and horizontal reflection symmetry, and four points of rotational symmetry
 T: vertical reflection symmetry only
 L: no symmetry
-S: two points of rotational symmetry only
+S(skew): two points of rotational symmetry only
 
 Fixed tetrominoes (translated but not rotated or reflected)
 
