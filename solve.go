@@ -67,6 +67,7 @@ func (board *GameBoard) possible(tetromino Tetromino, x, y int) bool {
 	if x+tetromino.Width > board.Width || y+tetromino.Height > board.Height {
 		return false
 	}
+
 	// Check if the cells are empty
 	for i := 0; i < tetromino.Height; i++ {
 		for j := 0; j < tetromino.Width; j++ {
@@ -79,10 +80,12 @@ func (board *GameBoard) possible(tetromino Tetromino, x, y int) bool {
 }
 
 func (board *GameBoard) place(tetromino Tetromino, x, y int) {
-	for i := 0; i < tetromino.Height; i++ {
-		for j := 0; j < tetromino.Width; j++ {
+	for i := 0; i < len(tetromino.Shape); i++ {
+		indx := 0
+		for j := 0; j < len(tetromino.Shape[i]); j++ {
 			if tetromino.Shape[i][j] == '#' {
-				board.Cells[y+i][x+j] = tetromino.Chr
+				board.Cells[y+i][x+indx] = tetromino.Chr
+				indx++
 			}
 		}
 	}

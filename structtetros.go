@@ -1,9 +1,6 @@
 package main
 
-import (
-	"fmt"
-	"strings"
-)
+import "fmt"
 
 // Tetromino structure
 type Tetromino struct {
@@ -14,7 +11,7 @@ type Tetromino struct {
 }
 
 func StructTetros(tetros [][]string) *[]Tetromino {
-	var terominoes []Tetromino
+	var tetrominoes []Tetromino
 	fstChar := 65 // ASCII code for 'A'
 
 	for _, tetro := range tetros {
@@ -22,6 +19,19 @@ func StructTetros(tetros [][]string) *[]Tetromino {
 		width := 0
 		height := 0
 		shape := []string{}
+
+		colToCut := []int{}
+		for col := 0; col < 4; col++ {
+			found := false
+			for row := 0; row < 4; row++ {
+				if tetro[row][col] == '#' {
+					found = true
+				}
+				if row == 3 && !found {
+					colToCut = append(colToCut, col)
+				}
+			}
+		}
 
 		for _, row := range tetro {
 			// reset width for each new row
@@ -38,21 +48,43 @@ func StructTetros(tetros [][]string) *[]Tetromino {
 					width = rowWidth
 				}
 				// add it to the shape list
-				shape = append(shape, strings.ReplaceAll(row, ".", ""))
+				shape = append(shape, row)
 			}
 		}
 
 		// Create a new Tetromino struct and add it to the list
-		teromino := Tetromino{
+		tetromino := Tetromino{
 			Chr:    chr,
 			Height: height,
 			Width:  width,
 			Shape:  shape,
 		}
-		terominoes = append(terominoes, teromino)
+
+		// Remove empty columns
+		for j := range tetromino.Shape {
+			str := ""
+			for indx, chr := range tetromino.Shape[j] {
+				if !contains(colToCut, indx) {
+					str += string(chr)
+				}
+			}
+			tetromino.Shape[j] = str
+		}
+
+		fmt.Println(tetromino.Shape)
+		tetrominoes = append(tetrominoes, tetromino)
 
 		fstChar++
 	}
-	fmt.Println(terominoes)
-	return &terominoes
+	return &tetrominoes
+}
+
+// Helper function to check if a value is present in a slice
+func contains(slice []int, val int) bool {
+	for _, v := range slice {
+		if v == val {
+			return true
+		}
+	}
+	return false
 }
