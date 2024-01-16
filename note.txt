@@ -27,3 +27,93 @@ hint: recursive backtracking
 hint: 
 tetrimino as a structure that contained a height, width and character array
 
+package main
+
+import (
+	"fmt"
+)
+
+// Tetromino structure
+type Tetromino struct {
+	Chr    string
+	Width  int
+	Height int
+	Shape  []string
+}
+
+// GameBoard structure
+type GameBoard struct {
+	Width  int
+	Height int
+	Cells  [][]string
+}
+
+// Initialize a new game board
+func NewGameBoard(width, height int) *GameBoard {
+	board := make([][]string, height)
+	for i := range board {
+		board[i] = make([]string, width)
+		for j := range board[i] {
+			board[i][j] = "."
+		}
+	}
+	return &GameBoard{
+		Width:  width,
+		Height: height,
+		Cells:  board,
+	}
+}
+
+// Place a Tetromino on the game board
+func (board *GameBoard) PlaceTetromino(tetromino Tetromino, x, y int) bool {
+	// Check if Tetromino fits on the board at the specified position
+	if x+tetromino.Width > board.Width || y+tetromino.Height > board.Height {
+		return false
+	}
+
+	// Place Tetromino on the board
+	for i := 0; i < tetromino.Height; i++ {
+		for j := 0; j < tetromino.Width; j++ {
+			if tetromino.Shape[i][j] == '#' {
+				board.Cells[y+i][x+j] = tetromino.Chr
+			}
+		}
+	}
+
+	return true
+}
+
+// Print the game board
+func (board *GameBoard) Print() {
+	for _, row := range board.Cells {
+		fmt.Println(row)
+	}
+}
+
+func main() {
+	// Define the Tetromino
+	tetromino := Tetromino{
+		Chr:    "A",
+		Width:  2,
+		Height: 2,
+		Shape:  []string{".##.", ".##."},
+	}
+
+	// Create a small initial game board
+	gameBoard := NewGameBoard(2, 2)
+
+	// Try placing the Tetromino on the board
+	for x := 0; x < gameBoard.Width; x++ {
+		for y := 0; y < gameBoard.Height; y++ {
+			if gameBoard.PlaceTetromino(tetromino, x, y) {
+				// If successful, print the board and exit
+				gameBoard.Print()
+				return
+			}
+		}
+	}
+
+	fmt.Println("Tetromino couldn't fit on the board.")
+}
+
+

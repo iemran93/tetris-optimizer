@@ -5,7 +5,7 @@ type Tetromino struct {
 	Chr    string
 	Width  int
 	Height int
-	Shape  [][]string
+	Shape  []string
 }
 
 func StructTetros(tetros [][]string) *[]Tetromino {
@@ -16,7 +16,7 @@ func StructTetros(tetros [][]string) *[]Tetromino {
 		chr := string(rune(fstChar))
 		width := 0
 		height := 0
-		shape := [][]string{}
+		shape := []string{}
 
 		for _, row := range tetro {
 			// reset width for each new row
@@ -33,7 +33,7 @@ func StructTetros(tetros [][]string) *[]Tetromino {
 					width = rowWidth
 				}
 				// add it to the shape list
-				shape = append(shape, []string{row})
+				shape = append(shape, row)
 			}
 		}
 
