@@ -27,29 +27,27 @@ hint: recursive backtracking
 hint: 
 tetrimino as a structure that contained a height, width and character array
 
-package main
 
-import (
-	"fmt"
-)
+func Solve(tetrominoes *[]Tetromino) *GameBoard {
+	// initialize a gameboard (starting with 2x2)
+	gameBoadrd := newGameBoard(2, 2)
 
-// Tetromino structure
-type Tetromino struct {
-	Chr    string
-	Width  int
-	Height int
-	Shape  []string
+	// is possible to place tetromino on this board
+	for x := 0; x < gameBoadrd.Width; x++ {
+		for y := 0; y < gameBoadrd.Height; y++ {
+			for _, tetromino := range *tetrominoes {
+				if gameBoadrd.possible(tetromino, x, y) {
+					// if possible place it
+					gameBoadrd.place(tetromino, x, y)
+					solve()
+				} else {
+				}
+			}
+		}
+	}
 }
 
-// GameBoard structure
-type GameBoard struct {
-	Width  int
-	Height int
-	Cells  [][]string
-}
-
-// Initialize a new game board
-func NewGameBoard(width, height int) *GameBoard {
+func newGameBoard(width, height int) *GameBoard {
 	board := make([][]string, height)
 	for i := range board {
 		board[i] = make([]string, width)
@@ -64,14 +62,16 @@ func NewGameBoard(width, height int) *GameBoard {
 	}
 }
 
-// Place a Tetromino on the game board
-func (board *GameBoard) PlaceTetromino(tetromino Tetromino, x, y int) bool {
-	// Check if Tetromino fits on the board at the specified position
+func (board *GameBoard) possible(tetromino Tetromino, x, y int) bool {
 	if x+tetromino.Width > board.Width || y+tetromino.Height > board.Height {
 		return false
 	}
+	return true
+}
 
-	// Place Tetromino on the board
+func (board *GameBoard) place(tetromino Tetromino, x, y int) {
+	// iterate over the tetromino to place it in the board
+	// if its # place it in the x, y position
 	for i := 0; i < tetromino.Height; i++ {
 		for j := 0; j < tetromino.Width; j++ {
 			if tetromino.Shape[i][j] == '#' {
@@ -79,41 +79,4 @@ func (board *GameBoard) PlaceTetromino(tetromino Tetromino, x, y int) bool {
 			}
 		}
 	}
-
-	return true
 }
-
-// Print the game board
-func (board *GameBoard) Print() {
-	for _, row := range board.Cells {
-		fmt.Println(row)
-	}
-}
-
-func main() {
-	// Define the Tetromino
-	tetromino := Tetromino{
-		Chr:    "A",
-		Width:  2,
-		Height: 2,
-		Shape:  []string{".##.", ".##."},
-	}
-
-	// Create a small initial game board
-	gameBoard := NewGameBoard(2, 2)
-
-	// Try placing the Tetromino on the board
-	for x := 0; x < gameBoard.Width; x++ {
-		for y := 0; y < gameBoard.Height; y++ {
-			if gameBoard.PlaceTetromino(tetromino, x, y) {
-				// If successful, print the board and exit
-				gameBoard.Print()
-				return
-			}
-		}
-	}
-
-	fmt.Println("Tetromino couldn't fit on the board.")
-}
-
-

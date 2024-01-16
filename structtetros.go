@@ -1,5 +1,10 @@
 package main
 
+import (
+	"fmt"
+	"strings"
+)
+
 // Tetromino structure
 type Tetromino struct {
 	Chr    string
@@ -33,7 +38,7 @@ func StructTetros(tetros [][]string) *[]Tetromino {
 					width = rowWidth
 				}
 				// add it to the shape list
-				shape = append(shape, row)
+				shape = append(shape, strings.ReplaceAll(row, ".", ""))
 			}
 		}
 
@@ -48,5 +53,6 @@ func StructTetros(tetros [][]string) *[]Tetromino {
 
 		fstChar++
 	}
+	fmt.Println(terominoes)
 	return &terominoes
 }

@@ -54,7 +54,8 @@ func main() {
 		tetrominoes := *StructTetros(tetros)
 
 		// start to solve it
-		Solve(&tetrominoes)
+		solution := *Play(&tetrominoes)
+		fmt.Print(solution.Cells)
 
 	} else {
 		log.Fatal("Tetro not valid")
