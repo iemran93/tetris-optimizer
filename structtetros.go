@@ -69,6 +69,11 @@ func StructTetros(tetros [][]string) *[]Tetromino {
 		tetrominoes = append(tetrominoes, tetromino)
 
 		fstChar++
+
+		// Handle wrap-around characters
+		if fstChar > 90 { // ASCII code for 'Z'
+			fstChar = 65 // ASCII code for 'A'
+		}
 	}
 	return &tetrominoes
 }
