@@ -9,7 +9,9 @@ type Tetromino struct {
 }
 
 func StructTetros(tetros [][]string) *[]Tetromino {
+	// tetrominoes contains all the tetromino struct
 	var tetrominoes []Tetromino
+
 	fstChar := 65 // ASCII code for 'A'
 
 	for _, tetro := range tetros {
@@ -18,6 +20,7 @@ func StructTetros(tetros [][]string) *[]Tetromino {
 		height := 0
 		shape := []string{}
 
+		// Columns to not consider in the shape (which has only .'s)
 		colToCut := []int{}
 		for col := 0; col < 4; col++ {
 			found := false
@@ -31,6 +34,7 @@ func StructTetros(tetros [][]string) *[]Tetromino {
 			}
 		}
 
+		// Assign the height of the tetromino
 		for _, row := range tetro {
 			for _, col := range row {
 				if col == '#' {
@@ -41,7 +45,7 @@ func StructTetros(tetros [][]string) *[]Tetromino {
 			}
 		}
 
-		// Remove empty columns
+		// Remove empty columns from the tetromino
 		for j := range shape {
 			str := ""
 			for indx, chr := range shape[j] {
@@ -52,17 +56,16 @@ func StructTetros(tetros [][]string) *[]Tetromino {
 			shape[j] = str
 		}
 
+		// Assign the width of the tetromino after removing empty columns
 		width = len(shape[0])
 
-		// Create a new Tetromino struct and add it to the list
+		// Create a new Tetromino struct and add it to the tetrominoes list
 		tetromino := Tetromino{
 			Chr:    chr,
 			Height: height,
 			Width:  width,
 			Shape:  shape,
 		}
-
-		// fmt.Println(tetromino)
 		tetrominoes = append(tetrominoes, tetromino)
 
 		fstChar++
@@ -70,7 +73,7 @@ func StructTetros(tetros [][]string) *[]Tetromino {
 	return &tetrominoes
 }
 
-// Helper function to check if a value is present in a slice
+// Check if a value is present in a slice
 func contains(slice []int, val int) bool {
 	for _, v := range slice {
 		if v == val {

@@ -4,18 +4,21 @@ import (
 	"strings"
 )
 
-func Valid(tetros [][]string) bool {
-	if characterValid(tetros) && tetroValid(tetros) {
+func Valid(tetrominoes [][]string) bool {
+	// Check validation:
+	// - Characters only . or #
+	// - Valid tetromino shape
+	if characterValid(tetrominoes) && tetroValid(tetrominoes) && len(tetrominoes) != 0 {
 		return true
 	}
 	return false
 }
 
-func characterValid(tetros [][]string) bool {
-	// check validation over character
-	for _, tetro := range tetros {
+func characterValid(tetrominoes [][]string) bool {
+	// Check validation over characters
+	for _, tetromino := range tetrominoes {
 		totalHash := 0
-		for _, chr := range strings.Join(tetro, "") {
+		for _, chr := range strings.Join(tetromino, "") {
 			if chr != '.' && chr != '#' {
 				return false
 			}
@@ -30,25 +33,25 @@ func characterValid(tetros [][]string) bool {
 	return true
 }
 
-func tetroValid(tetros [][]string) bool {
-	// check if its a valid tetro
-	// count the total number of sides touching
-	for _, tetro := range tetros {
+func tetroValid(tetrominoes [][]string) bool {
+	// Check if its a valid tetromino shape
+	// by counting the total numbers of sides touching
+	for _, tetromino := range tetrominoes {
 		totalSideTouching := 0
-		for rx, row := range tetro {
+		for rx, row := range tetromino {
 			for cx, col := range row {
 				if col == '#' {
 					sideTouching := 0
-					if hasNeighbor(tetro, rx-1, cx) { // check above
+					if hasNeighbor(tetromino, rx-1, cx) { // check above
 						sideTouching++
 					}
-					if hasNeighbor(tetro, rx+1, cx) { // check below
+					if hasNeighbor(tetromino, rx+1, cx) { // check below
 						sideTouching++
 					}
-					if hasNeighbor(tetro, rx, cx+1) { // check right
+					if hasNeighbor(tetromino, rx, cx+1) { // check right
 						sideTouching++
 					}
-					if hasNeighbor(tetro, rx, cx-1) { // check left
+					if hasNeighbor(tetromino, rx, cx-1) { // check left
 						sideTouching++
 					}
 					if sideTouching == 0 || sideTouching > 3 {
@@ -65,7 +68,7 @@ func tetroValid(tetros [][]string) bool {
 	return true
 }
 
-func hasNeighbor(tetro []string, rx, cx int) bool {
+func hasNeighbor(tetromino []string, rx, cx int) bool {
 	// Check if the position is within bounds and contains '#'
-	return rx >= 0 && rx < len(tetro) && cx >= 0 && cx < len(tetro[rx]) && tetro[rx][cx] == '#'
+	return rx >= 0 && rx < len(tetromino) && cx >= 0 && cx < len(tetromino[rx]) && tetromino[rx][cx] == '#'
 }

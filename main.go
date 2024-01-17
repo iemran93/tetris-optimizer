@@ -10,55 +10,52 @@ import (
 )
 
 func main() {
-	var tetros [][]string
-	var data []string
+	var tetrominoes [][]string
+	var input []string
 
 	// Record the start time
 	startTime := time.Now()
 
-	// read the args
+	// Read the args
 	args := os.Args
 	if len(args) != 2 {
-		log.Fatal("Args length error")
+		log.Fatal("ERROR: Check Arguments length")
 	}
 	filename := args[1]
 
-	// open the file
-	dataFile, err := os.Open(filename)
+	// Open the file
+	inputFile, err := os.Open(filename)
 	if err != nil {
-		log.Fatal("error while opening the file\n", err)
+		log.Fatal("ERROR: While opening the file\n", err)
 	}
 
-	// iterate over each line in the file
-	scanner := bufio.NewScanner(dataFile)
+	// Iterate over each line in the file
+	scanner := bufio.NewScanner(inputFile)
 	lineIndex := 0
 	for scanner.Scan() {
 		lineIndex++
 		line := scanner.Bytes()
-		// check formatting
-		if len(line) != 4 && lineIndex != 5 || lineIndex == 5 && len(line) != 0 {
-			log.Fatal("Formatting error")
+
+		// Check formatting
+		if (len(line) != 4 && lineIndex != 5) || (lineIndex == 5 && len(line) != 0) {
+			log.Fatal("ERROR: Formatting error")
 		}
-		// append the data to the tetros
-		// reset line index
-		data = append(data, string(line))
+
+		// Append the data to the tetrominoes & reset lineIndex
+		input = append(input, string(line))
 		if lineIndex == 5 {
-			tetros = append(tetros, data[:4])
+			tetrominoes = append(tetrominoes, input[:4])
 			lineIndex = 0
-			data = nil
+			input = nil
 		}
 	}
 
-	// fmt.Println(tetros)
+	// Check validation & start solving
+	if Valid(tetrominoes) {
+		// Create a structure for eac tetromino [width, height, shape, char]
+		tetrominoes := *StructTetros(tetrominoes)
 
-	// Check validation
-	if Valid(tetros) {
-		fmt.Println("Valid tetro, lets play")
-
-		// create a structure for the input tetros width, height, character
-		tetrominoes := *StructTetros(tetros)
-
-		// start to solve it
+		// Begin solving
 		solution := *Play(&tetrominoes)
 
 		// Print the solution
@@ -72,6 +69,6 @@ func main() {
 		fmt.Printf("Program took %s to finish.\n", elapsedTime)
 
 	} else {
-		log.Fatal("Tetro not valid")
+		log.Fatal("ERROR: Tetrominoes not valid")
 	}
 }

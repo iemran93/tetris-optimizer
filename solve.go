@@ -8,6 +8,7 @@ type GameBoard struct {
 }
 
 func Play(tetrominoes *[]Tetromino) *GameBoard {
+	// Starting with board size 2x2
 	boardSize := 2
 	gameBoard := newGameBoard(boardSize, boardSize)
 
@@ -18,6 +19,7 @@ func Play(tetrominoes *[]Tetromino) *GameBoard {
 	return gameBoard
 }
 
+// Create an empty gameboard (wxh)
 func newGameBoard(width, height int) *GameBoard {
 	board := make([][]string, height)
 	for i := range board {
@@ -38,7 +40,7 @@ func soltionFound(tetrominoes *[]Tetromino, board *GameBoard) bool {
 }
 
 func tryPlaceTetromino(tetrominoes []Tetromino, board *GameBoard, index int) bool {
-	// baseline (all tetrominoes placed)
+	// BaseCase (all tetrominoes placed)
 	if index == len(tetrominoes) {
 		return true
 	}
@@ -63,6 +65,7 @@ func tryPlaceTetromino(tetrominoes []Tetromino, board *GameBoard, index int) boo
 	return false
 }
 
+// Check if possible to place the tetro in the given x, y position
 func (board *GameBoard) possible(tetromino Tetromino, x, y int) bool {
 	if x+tetromino.Width > board.Width || y+tetromino.Height > board.Height {
 		return false
@@ -79,8 +82,8 @@ func (board *GameBoard) possible(tetromino Tetromino, x, y int) bool {
 	return true
 }
 
+// Plcae the tetro in the given x, y position
 func (board *GameBoard) place(tetromino Tetromino, x, y int) {
-	// fmt.Println(board.Cells)
 	for i := 0; i < len(tetromino.Shape); i++ {
 		for j := 0; j < len(tetromino.Shape[i]); j++ {
 			if tetromino.Shape[i][j] == '#' {
@@ -90,6 +93,7 @@ func (board *GameBoard) place(tetromino Tetromino, x, y int) {
 	}
 }
 
+// Remove the tetro in the given x, y position
 func (board *GameBoard) remove(tetromino Tetromino, x, y int) {
 	for i := 0; i < tetromino.Height; i++ {
 		for j := 0; j < tetromino.Width; j++ {
