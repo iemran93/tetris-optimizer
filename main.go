@@ -35,7 +35,6 @@ func main() {
 	for scanner.Scan() {
 		lineIndex++
 		line := scanner.Bytes()
-
 		// Check formatting
 		if (len(line) != 4 && lineIndex != 5) || (lineIndex == 5 && len(line) != 0) {
 			log.Fatal("ERROR: Formatting error")
@@ -48,6 +47,9 @@ func main() {
 			lineIndex = 0
 			input = nil
 		}
+	}
+	if len(input) != 0 { // Check if last newline exist
+		log.Fatal("ERROR: Formatting error")
 	}
 
 	// Check validation & start solving
