@@ -34,23 +34,27 @@ func StructTetros(tetros [][]string) *[]Tetromino {
 		}
 
 		for _, row := range tetro {
-			// reset width for each new row
-			rowWidth := 0
 			for _, col := range row {
 				if col == '#' {
-					rowWidth++
+					shape = append(shape, row)
+					height++
+					break
 				}
-			}
-			if rowWidth > 0 {
-				// if row containing at least one # count it
-				height++
-				if rowWidth > width { // take the most number of width
-					width = rowWidth
-				}
-				// add it to the shape list
-				shape = append(shape, row)
 			}
 		}
+
+		// Remove empty columns
+		for j := range shape {
+			str := ""
+			for indx, chr := range shape[j] {
+				if !contains(colToCut, indx) {
+					str += string(chr)
+				}
+			}
+			shape[j] = str
+		}
+
+		width = len(shape[0])
 
 		// Create a new Tetromino struct and add it to the list
 		tetromino := Tetromino{
@@ -60,18 +64,7 @@ func StructTetros(tetros [][]string) *[]Tetromino {
 			Shape:  shape,
 		}
 
-		// Remove empty columns
-		for j := range tetromino.Shape {
-			str := ""
-			for indx, chr := range tetromino.Shape[j] {
-				if !contains(colToCut, indx) {
-					str += string(chr)
-				}
-			}
-			tetromino.Shape[j] = str
-		}
-
-		fmt.Println(tetromino.Shape)
+		fmt.Println(tetromino)
 		tetrominoes = append(tetrominoes, tetromino)
 
 		fstChar++

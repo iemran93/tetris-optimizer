@@ -51,7 +51,7 @@ func tetroValid(tetros [][]string) bool {
 					if hasNeighbor(tetro, rx, cx-1) { // check left
 						sideTouching++
 					}
-					if sideTouching == 0 || sideTouching > 2 {
+					if sideTouching == 0 || sideTouching > 3 {
 						return false
 					}
 					totalSideTouching += sideTouching
