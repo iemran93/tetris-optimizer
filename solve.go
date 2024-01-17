@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 // GameBoard structure
 type GameBoard struct {
 	Width  int
@@ -82,7 +80,7 @@ func (board *GameBoard) possible(tetromino Tetromino, x, y int) bool {
 }
 
 func (board *GameBoard) place(tetromino Tetromino, x, y int) {
-	fmt.Println(board.Cells)
+	// fmt.Println(board.Cells)
 	for i := 0; i < len(tetromino.Shape); i++ {
 		for j := 0; j < len(tetromino.Shape[i]); j++ {
 			if tetromino.Shape[i][j] == '#' {

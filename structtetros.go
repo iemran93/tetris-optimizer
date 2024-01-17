@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 // Tetromino structure
 type Tetromino struct {
 	Chr    string
@@ -64,7 +62,7 @@ func StructTetros(tetros [][]string) *[]Tetromino {
 			Shape:  shape,
 		}
 
-		fmt.Println(tetromino)
+		// fmt.Println(tetromino)
 		tetrominoes = append(tetrominoes, tetromino)
 
 		fstChar++

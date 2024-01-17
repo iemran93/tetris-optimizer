@@ -5,11 +5,16 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
+	"time"
 )
 
 func main() {
 	var tetros [][]string
 	var data []string
+
+	// Record the start time
+	startTime := time.Now()
 
 	// read the args
 	args := os.Args
@@ -44,7 +49,7 @@ func main() {
 		}
 	}
 
-	fmt.Println(tetros)
+	// fmt.Println(tetros)
 
 	// Check validation
 	if Valid(tetros) {
@@ -55,7 +60,16 @@ func main() {
 
 		// start to solve it
 		solution := *Play(&tetrominoes)
-		fmt.Print(solution.Cells)
+
+		// Print the solution
+		for row := range solution.Cells {
+			fmt.Println(strings.Join(solution.Cells[row], ""))
+		}
+
+		// Calculate the elapsed time
+		endTime := time.Now()
+		elapsedTime := endTime.Sub(startTime)
+		fmt.Printf("Program took %s to finish.\n", elapsedTime)
 
 	} else {
 		log.Fatal("Tetro not valid")
